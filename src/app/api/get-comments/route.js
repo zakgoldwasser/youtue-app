@@ -3,7 +3,7 @@
 import { NextResponse } from 'next/server';
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY; // Replace with your API Key
 
-export async function POST(request: Request) {
+export async function POST(request) {
   try {
     const { videoId } = await request.json();
 

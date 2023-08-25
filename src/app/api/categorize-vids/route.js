@@ -9,7 +9,7 @@ function capitalizeFirstLetterOfEachWord(str) {
   });
 }
 
-export async function POST(request: Request) {
+export async function POST(request) {
   try {
     const { videoData, secondaryInput } = await request.json();
 

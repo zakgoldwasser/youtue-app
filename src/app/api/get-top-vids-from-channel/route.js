@@ -4,7 +4,7 @@ import { NextResponse } from 'next/server';
 
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY; // Replace with your API Key
 
-export async function POST(request: Request) {
+export async function POST(request) {
   try {
     const { channelUserName } = await request.json();
     console.log(channelUserName);
