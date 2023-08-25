@@ -1,9 +1,14 @@
 //app/api/analyze-video/route.ts
 
 import { NextResponse } from 'next/server';
-const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY; // Replace with your API Key
+// Replace with your API Key
 
 export async function POST(request) {
+  const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+  console.log(YOUTUBE_API_KEY);
+  if (!YOUTUBE_API_KEYk) {
+    throw new Error(`No API Key`);
+  }
   try {
     const { videoId } = await request.json();
 
