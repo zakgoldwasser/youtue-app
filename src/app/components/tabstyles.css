@@ -1,0 +1,16 @@
+/* Create a keyframe animation */
+@keyframes slideUp {
+  from {
+    transform: translateY(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+/* Create a class to apply the animation */
+.placeholder-animation {
+  animation: slideUp 0.5s ease-in-out forwards;
+}

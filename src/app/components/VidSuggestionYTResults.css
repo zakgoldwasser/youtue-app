@@ -1,0 +1,24 @@
+@keyframes bounceInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(100%);
+  }
+  30% {
+    opacity: 1;
+    transform: translateY(-25px);
+  }
+  50% {
+    transform: translateY(0px);
+  }
+  70% {
+    transform: translateY(-12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bounce-in-up {
+  animation: bounceInUp 1s ease-out;
+}
