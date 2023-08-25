@@ -4,8 +4,8 @@ import { NextResponse } from 'next/server';
 // Replace with your API Key
 
 export async function POST(request) {
-  return NextResponse.json({ message: process.env.YOUTUBE_API_KEY });
   const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
+  return NextResponse.json({ message: YOUTUBE_API_KEY, test_item: 'string' });
 
   if (!YOUTUBE_API_KEYk) return NextResponse.json({ message: 'No API key' });
   try {
