@@ -10,10 +10,6 @@ export async function POST(request) {
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });
-    return NextResponse.json({
-      text: process.env.OPENAI_API_KEY,
-      OPENAI_API_KEY: 'OPENAI_API_KEY',
-    });
 
     const completion = await openai.chat.completions.create({
       messages: [
