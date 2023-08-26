@@ -55,6 +55,7 @@ export default function Home() {
     if (errorMessage && showError) {
       const timer = setTimeout(() => {
         setShowError(false);
+        setErrorMessage(null);
       }, 3000);
 
       return () => clearTimeout(timer);
@@ -211,19 +212,20 @@ export default function Home() {
         <h1 className="text-xl sm:text-2xl mb-6 font-semibold text-center text-gray-700">
           YouTube Analyzer
         </h1>
-
+        <div className="h-20 flex flex-col justify-center">
+          <label className="text-xs sm:text-sm font-medium text-gray-600 text-center ">
+            <ModeHeader mode={mode} />
+          </label>
+          <div
+            className={`mx-auto rounded-full h-7 my-3 flex items-center justify-center w-3/4 ${
+              errorMessage && showError ? 'bg-red-200 text-white' : ''
+            }`}
+          >
+            {errorMessage && showError ? errorMessage : null}
+          </div>
+        </div>
         <form onSubmit={fetchResults} className="space-y-4">
           <div className="flex flex-col">
-            <label className="text-xs sm:text-sm font-medium text-gray-600 text-center">
-              <ModeHeader mode={mode} />
-            </label>
-            <div
-              className={`mx-auto rounded-full h-7 my-3 flex items-center justify-center w-3/4 ${
-                errorMessage && showError ? 'bg-red-200 text-white' : ''
-              }`}
-            >
-              {errorMessage && showError ? errorMessage : null}
-            </div>
             <div className="relative flex flex-col items-center w-full">
               <InputBar
                 inputURL={inputURL}

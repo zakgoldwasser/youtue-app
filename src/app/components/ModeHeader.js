@@ -17,9 +17,14 @@ export default function ModeHeader({ mode }) {
         setModeHeader(
           <>
             Get a list of topic suggestions and title templates to kick-start
-            your ideation process
+            your ideation process.
             <br />
             Add a <span className="font-bold">CHANNEL URL</span> below.
+            <br />
+            <div className="text-xs w-3/4 mx-auto">
+              Adding a topic will create a list of video titles about the topic
+              in the style of the channel
+            </div>
           </>
         );
         break;

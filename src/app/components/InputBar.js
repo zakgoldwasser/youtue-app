@@ -1,21 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 export default function InputBar({ inputURL, setInputURL, openTab, mode }) {
   const [animatedPlaceholder, setAnimatedPlaceholder] = useState('');
   const [shouldAnimate, setShouldAnimate] = useState(true);
   const [timeouts, setTimeouts] = useState([]);
   const [isCursorVisible, setIsCursorVisible] = useState(true);
-
+  const shouldAnimateRef = useRef(true);
   let placeholderTexts = ['Enter your YouTube URL'];
   const typingSpeed = 100;
   const pauseDuration = 1000;
   let currentIndex = 0;
+
+  const clearAllTimers = () => {
+    timeouts.forEach((timer) => clearTimeout(timer));
+    setTimeouts([]);
+  };
+
   useEffect(() => {
+    if (!shouldAnimate) return;
     const typeText = (text, callback) => {
       for (let i = 0; i <= text.length; i++) {
         const currentTimer = setTimeout(() => {
-          setAnimatedPlaceholder(text.substr(0, i));
-          if (i === text.length && callback) callback();
+          if (shouldAnimateRef.current) {
+            // Use the ref's value here
+            setAnimatedPlaceholder(text.substr(0, i));
+            if (i === text.length && callback) callback();
+          }
         }, typingSpeed * i);
         setTimeouts((prevTimeouts) => [...prevTimeouts, currentTimer]);
       }
@@ -24,13 +34,15 @@ export default function InputBar({ inputURL, setInputURL, openTab, mode }) {
     const backspaceText = (text, callback) => {
       for (let i = text.length; i >= 0; i--) {
         const currentTimer = setTimeout(() => {
-          setAnimatedPlaceholder(text.substr(0, i));
-          if (i === 0 && callback) callback();
+          if (shouldAnimateRef.current) {
+            // Use the ref's value here
+            setAnimatedPlaceholder(text.substr(0, i));
+            if (i === 0 && callback) callback();
+          }
         }, typingSpeed * (text.length - i));
         setTimeouts((prevTimeouts) => [...prevTimeouts, currentTimer]);
       }
     };
-
     const animateTexts = () => {
       if (!shouldAnimate) return;
 
@@ -48,46 +60,43 @@ export default function InputBar({ inputURL, setInputURL, openTab, mode }) {
         }, pauseDuration);
       });
     };
-
-    animateTexts(); // Initial call to start the infinite loop
+    animateTexts();
 
     return () => {
-      timeouts.forEach((timer) => clearTimeout(timer));
+      clearAllTimers();
     };
   }, [shouldAnimate]);
+
   const handleInputClick = () => {
-    setAnimatedPlaceholder(''); // Clear the animated text
-    timeouts.forEach((timer) => clearTimeout(timer)); // Clear all active timeouts
-    setTimeouts([]); // Reset timeouts array
+    clearAllTimers();
+    setAnimatedPlaceholder('');
     setShouldAnimate(false);
     setIsCursorVisible(false);
   };
   const handleBlur = () => {
+    console.log(handleBlur);
     if (!inputURL) {
-      timeouts.forEach((timer) => clearTimeout(timer)); // Clear all active timeouts
-      setTimeouts([]); // Reset timeouts array
+      clearAllTimers();
       setShouldAnimate(true);
       setIsCursorVisible(true);
       setAnimatedPlaceholder('');
-      currentIndex = 0; // Reset the starting point of animation
+      currentIndex = 0;
     }
   };
   useEffect(() => {
     if (openTab) {
-      // Pause the animation
-      timeouts.forEach((timer) => clearTimeout(timer)); // Clear all active timeouts
-      setTimeouts([]); // Reset timeouts array
+      clearAllTimers();
       setShouldAnimate(false);
     } else if (!openTab && !inputURL) {
-      // Restart the animation
-      timeouts.forEach((timer) => clearTimeout(timer)); // Clear all active timeouts
-      setTimeouts([]); // Reset timeouts array
+      clearAllTimers();
       setShouldAnimate(true);
       setAnimatedPlaceholder('');
-      currentIndex = 0; // Reset the starting point of animation
+      currentIndex = 0;
     }
   }, [openTab, inputURL]);
-
+  useEffect(() => {
+    shouldAnimateRef.current = shouldAnimate; // Update it whenever shouldAnimate changes
+  }, [shouldAnimate]);
   return (
     <div className="bg-white mt-5 relative py-2 border rounded-full focus-within:ring focus-within:ring-pink-200 focus-within:border-pink-300 input-shadow z-10 w-full">
       <div
