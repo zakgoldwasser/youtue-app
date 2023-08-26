@@ -7,7 +7,6 @@ const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY; // Replace with your API Ke
 export async function POST(request) {
   try {
     const { channelUserName } = await request.json();
-    console.log(channelUserName);
     // Fetching the list of popular videos for a channel
     const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${channelUserName}&type=channel&key=${YOUTUBE_API_KEY}`;
     const searchResponse = await fetch(searchUrl);
