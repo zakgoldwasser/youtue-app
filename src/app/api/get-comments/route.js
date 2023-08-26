@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 export async function POST(request) {
   const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
   return NextResponse.json({
-    message: process,
+    message: process.env,
     test_item: 'string',
     yt: YOUTUBE_API_KEY + '  ihtoiheoihtoh',
   });
