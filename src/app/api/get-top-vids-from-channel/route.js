@@ -61,7 +61,8 @@ export async function POST(request) {
 
     return NextResponse.json(returnData);
   } catch (error) {
-    console.error('Error fetching YouTube video details:', error);
-    throw new Error(`Failed to fetch video list. Status: ${error}`);
+    return NextResponse.json({
+      error: true,
+    });
   }
 }

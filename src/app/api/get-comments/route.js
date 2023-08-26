@@ -57,7 +57,8 @@ export async function POST(request) {
       commentsData: allComments.join(' '),
     });
   } catch (error) {
-    console.error('Error fetching YouTube comments:', error);
-    // return NextResponse.error({ status: 500, statusText: 'Internal Server Error' });
+    return NextResponse.json({
+      error: true,
+    });
   }
 }

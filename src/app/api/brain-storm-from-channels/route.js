@@ -34,7 +34,8 @@ export async function POST(request) {
       mode: 'brain-storm-from-channels',
     });
   } catch (error) {
-    console.error('Error fetching YouTube video details:', error);
-    throw new Error(`Failed to fetch video list. Status: ${error}`);
+    return NextResponse.json({
+      error: true,
+    });
   }
 }

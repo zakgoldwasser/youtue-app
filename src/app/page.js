@@ -101,7 +101,7 @@ export default function Home() {
       }
 
       const resultData = await response.json();
-      console.log(resultData);
+
       return resultData;
     } catch (error) {
       setErrorMessage('There was an error with the request please try again');
@@ -111,6 +111,8 @@ export default function Home() {
   };
 
   async function fetchResults(e) {
+    setYTDataResults({});
+    setOpenAiResults({});
     e.preventDefault();
     setLoading(true);
     let apiEndpoint;
@@ -171,8 +173,11 @@ export default function Home() {
 
     const resultsFromYT = await makeAPICall(apiEndpoint, messageBody);
     setYTDataResults(resultsFromYT ? resultsFromYT : {});
-    console.log(resultsFromYT);
     if (!resultsFromYT) {
+      return;
+    }
+    if (resultsFromYT.error) {
+      setErrorMessage('There was an error with the request please try again');
       return;
     }
     resultsFromYT &&
@@ -189,6 +194,10 @@ export default function Home() {
     });
 
     if (!resultsFromOpenAI) {
+      return;
+    }
+    if (resultsFromOpenAI.error) {
+      setErrorMessage('There was an error with the request please try again');
       return;
     }
     setOpenAiResults(resultsFromOpenAI ? resultsFromOpenAI : {});
