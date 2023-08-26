@@ -5,7 +5,11 @@ import { NextResponse } from 'next/server';
 
 export async function POST(request) {
   const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY;
-  return NextResponse.json({ message: process.env, test_item: 'string' });
+  return NextResponse.json({
+    message: process.env,
+    test_item: 'string',
+    yt: YOUTUBE_API_KEY,
+  });
 
   if (!YOUTUBE_API_KEYk) return NextResponse.json({ message: 'No API key' });
   try {
