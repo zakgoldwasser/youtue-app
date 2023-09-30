@@ -6,7 +6,7 @@ import OpenAI from 'openai';
 export async function POST(request) {
   try {
     const { videoData, secondaryInput, channelUserName } = await request.json();
-
+    console.log(videoData, secondaryInput, channelUserName);
     const openai = new OpenAI({
       apiKey: process.env.OPENAI_API_KEY,
     });

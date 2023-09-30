@@ -76,10 +76,11 @@ export default function Home() {
   }
 
   const makeAPICall = async (apiEndpoint, messageBody) => {
+    console.log(apiEndpoint, messageBody);
     const controller = new AbortController();
     const { signal } = controller;
 
-    const fetchPromise = fetch(apiEndpoint, {
+    const fetchPromise = await fetch(apiEndpoint, {
       method: 'POST',
       body: JSON.stringify(messageBody),
       headers: {
@@ -102,9 +103,11 @@ export default function Home() {
       }
 
       const resultData = await response.json();
+      console.log(resultData);
 
       return resultData;
     } catch (error) {
+      console.log(error);
       setErrorMessage('There was an error with the request please try again');
       setLoading(false);
       setOpenAILoader(false);
@@ -171,7 +174,7 @@ export default function Home() {
         textAnalysisEndPoint = '/api/categorize-vids';
         break;
     }
-
+    console.log('api1');
     const resultsFromYT = await makeAPICall(apiEndpoint, messageBody);
     setYTDataResults(resultsFromYT ? resultsFromYT : {});
     if (!resultsFromYT) {

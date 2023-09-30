@@ -5,13 +5,17 @@ import { NextResponse } from 'next/server';
 const YOUTUBE_API_KEY = process.env.YOUTUBE_API_KEY; // Replace with your API Key
 
 export async function POST(request) {
+  console.log('REQUEST', request);
   try {
     const { channelUserName } = await request.json();
+
     // Fetching the list of popular videos for a channel
     const searchUrl = `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=5&q=${channelUserName}&type=channel&key=${YOUTUBE_API_KEY}`;
+    console.log(searchUrl);
     const searchResponse = await fetch(searchUrl);
-
+    console.log(searchResponse, 'SEARCH SEARCH SEARCH');
     if (!searchResponse.ok) {
+      console.log(searchResponse);
       throw new Error(
         `Failed to fetch video list. Status: ${searchResponse.status}`
       );
@@ -44,7 +48,6 @@ export async function POST(request) {
     // Combine video details with view count
     const combinedData = videosData.items
       .map((video, index) => {
-        console.log(video.snippet, statsData.items[index].statistics);
         return {
           title: video.snippet.title,
           viewCount: statsData.items[index].statistics.viewCount,
@@ -61,6 +64,7 @@ export async function POST(request) {
 
     return NextResponse.json(returnData);
   } catch (error) {
+    console.log(error, 'error');
     return NextResponse.json({
       error: true,
     });
